@@ -1,4 +1,5 @@
 :root { color-scheme: dark; }
 * { box-sizing: border-box; }
-body { margin: 0; background: #07090f; color: #e8ecf4;
-  font-family: Georgia, 'Times New Roman', serif; line-height: 1.6; }
+body { margin: 0; background: #0a0a1f; color: #dfe8ff; font-family: 'VT323', monospace;
+  font-size: 1.35rem; line-height: 1.3; overflow: hidden; }
+h2, h3, button, .hint, .badge { font-family: 'Press Start 2P', monospace; }

@@ -1,20 +1,37 @@
-
-.hero { min-height: 100vh; display: grid; place-content: center;
-  text-align: center; padding: 2rem;
-  background: radial-gradient(circle at 50% 30%, #1a2338, #07090f 70%); }
-.hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); margin: 0; letter-spacing: .05em; }
-.hero p { opacity: .7; max-width: 32rem; margin: 1rem auto 0; }
-.machine { max-width: 40rem; margin: 0 auto; padding: 6rem 1.5rem; }
-.machine h2 { font-size: 2.5rem; margin: 0; }
-.tag { color: #e0a96d; font-style: italic; margin: .25rem 0 3rem; }
-.chapter { margin: 0 0 3rem; }
-.chapter h3 { margin: .5rem 0 .25rem; font-size: 1.3rem; }
-.badge { font: 600 .7rem system-ui, sans-serif; letter-spacing: .12em;
-  text-transform: uppercase; padding: .2rem .5rem; border-radius: 4px; }
-.badge.documented { background: #1f3d2e; color: #7bdba0; }
-.badge.imagined { background: #3d2e1f; color: #e0a96d; }
-.src { display: block; opacity: .5; font: .75rem system-ui, sans-serif; }
-.gallery { display: grid; gap: 1rem; margin: 0 0 3rem; }
-.gallery img { width: 100%; border-radius: 6px; }
-.gallery figcaption { font: .75rem system-ui, sans-serif; opacity: .6; }
-.gallery a { color: #e0a96d; }
+:root { --bg: #0a0a1f; --mint: #7fe3c0; --blue: #3b3b85; --amber: #ffd98a; }
+canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none;
+  image-rendering: crisp-edges; image-rendering: pixelated; }
+body::after { content: ''; position: fixed; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,.15) 0 1px, transparent 1px 3px); }
+.hint { position: fixed; top: 1rem; left: 0; right: 0; text-align: center; font-size: .6rem;
+  color: var(--mint); pointer-events: none; padding: 0 1rem; line-height: 1.6; }
+.memory { position: fixed; left: 0; right: 0; bottom: 0; margin: 0 .75rem .75rem; max-height: 68vh;
+  overflow: auto; padding: 1.2rem; background: var(--bg); border: 4px solid var(--mint);
+  box-shadow: 0 0 0 4px var(--bg), 6px 6px 0 4px var(--blue); }
+.memory h2 { font-size: .9rem; color: var(--mint); margin: 0 0 .8rem; }
+.memory h3 { font-size: .75rem; margin: .6rem 0 .4rem; }
+.memory p { margin: .3rem 0 .6rem; }
+.badge { display: inline-block; font-size: .5rem; padding: .3rem .5rem; }
+.badge.documented { background: #123c3a; color: var(--mint); }
+.badge.imagined { background: #3c2a12; color: var(--amber); }
+.src { display: block; opacity: .6; font-size: 1rem; }
+.memory button { font-size: .7rem; padding: .8rem 1rem; border: 0; background: var(--mint);
+  color: var(--bg); box-shadow: 4px 4px 0 var(--blue); cursor: pointer; margin-top: .8rem; }
+.memory .x { position: absolute; top: .4rem; right: .5rem; margin: 0; padding: .3rem .6rem;
+  box-shadow: none; background: none; color: #fff; font-size: 1rem; }
+.gallery { display: grid; gap: .6rem; margin: 0 0 .8rem; }
+.gallery img { width: 100%; max-height: 28vh; object-fit: cover; border: 2px solid var(--mint); }
+.gallery figcaption { font-size: 1rem; opacity: .7; }
+.gallery a { color: var(--amber); }
+.hint { top: 2.6rem; }
+.mute { position: fixed; top: .6rem; right: .6rem; z-index: 5; font-size: .5rem; padding: .5rem .6rem;
+  border: 0; background: var(--bg); color: var(--mint); box-shadow: 0 0 0 2px var(--mint); cursor: pointer; }
+.ending { position: fixed; inset: 0; z-index: 10; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center; gap: .8rem; padding: 2rem;
+  background: rgba(10,10,31,.88); animation: fade 2.5s ease both; }
+.ending h1 { font-size: 1rem; line-height: 1.6; color: var(--mint); margin: 0; }
+.ending p { margin: 0; max-width: 32rem; }
+.ending .fine { opacity: .6; font-size: 1.05rem; }
+.ending button { font-size: .7rem; padding: .8rem 1rem; border: 0; background: var(--mint);
+  color: var(--bg); box-shadow: 4px 4px 0 var(--blue); cursor: pointer; margin-top: .8rem; }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }

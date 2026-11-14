@@ -1,29 +1,45 @@
+import { useEffect, useState } from 'react'
+import World from './World'
+import Memory from './Memory'
+import Ending from './Ending'
 import { machines } from './data/machines'
-import NasaImages from './NasaImages'
+import { startMusic, toggleMute } from './music'
 import './App.css'
 
 export default function App() {
+  const [active, setActive] = useState(null)
+  const [lit, setLit] = useState([])
+  const [done, setDone] = useState(false)
+  const [muted, setMuted] = useState(false)
+
+  useEffect(() => {
+    const go = () => {
+      startMusic()
+      removeEventListener('pointerdown', go); removeEventListener('keydown', go)
+    }
+    addEventListener('pointerdown', go); addEventListener('keydown', go)
+    return () => { removeEventListener('pointerdown', go); removeEventListener('keydown', go) }
+  }, [])
+
+  const all = lit.length >= machines.length
   return (
-    <main>
-      <header className="hero">
-        <h1>NOEMA</h1>
-        <p>Machines we left behind. Stories we should not forget.</p>
-      </header>
-      {machines.map((m) => (
-        <section key={m.id} className="machine">
-          <h2>{m.name}</h2>
-          <p className="tag">{m.tagline}</p>
-          <NasaImages query={m.imageQuery} />
-          {m.chapters.map((c) => (
-            <article key={c.title} className="chapter">
-              <span className={`badge ${c.kind}`}>{c.kind}</span>
-              <h3>{c.title}</h3>
-              <p>{c.text}</p>
-              <small className="src">Source: {c.source}</small>
-            </article>
-          ))}
-        </section>
-      ))}
-    </main>
+    <>
+      <World lit={lit} paused={!!active || done} onOpen={setActive} onFinish={() => setDone(true)} />
+      <p className="hint">
+        {all ? 'Every machine is lit. A rocket waits ahead.' : 'Tap anywhere to walk. Find the dark machines.'}
+      </p>
+      <button className="mute" onClick={() => setMuted(toggleMute())}>
+        {muted ? 'SOUND OFF' : 'SOUND ON'}
+      </button>
+      {active && (
+        <Memory
+          key={active.id}
+          m={active}
+          onClose={() => setActive(null)}
+          onDone={() => { setLit((l) => [...l, active.id]); setActive(null) }}
+        />
+      )}
+      {done && <Ending count={machines.length} />}
+    </>
   )
 }
