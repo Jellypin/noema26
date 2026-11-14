@@ -3,7 +3,7 @@ import World from './World'
 import Memory from './Memory'
 import Ending from './Ending'
 import { machines } from './data/machines'
-import { startMusic, toggleMute } from './music'
+import { startMusic, toggleMute, ignitionSound } from './music'
 import './App.css'
 
 export default function App() {
@@ -36,7 +36,7 @@ export default function App() {
           key={active.id}
           m={active}
           onClose={() => setActive(null)}
-          onDone={() => { setLit((l) => [...l, active.id]); setActive(null) }}
+          onDone={() => { ignitionSound(active.sprite); setLit((l) => [...l, active.id]); setActive(null) }}
         />
       )}
       {done && <Ending count={machines.length} />}
