@@ -1,4 +1,5 @@
 
+import NasaImages from './NasaImages'
 import { machines } from './data/machines'
 import './App.css'
 

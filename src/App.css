@@ -14,3 +14,7 @@
 .badge.documented { background: #1f3d2e; color: #7bdba0; }
 .badge.imagined { background: #3d2e1f; color: #e0a96d; }
 .src { display: block; opacity: .5; font: .75rem system-ui, sans-serif; }
+.gallery { display: grid; gap: 1rem; margin: 0 0 3rem; }
+.gallery img { width: 100%; border-radius: 6px; }
+.gallery figcaption { font: .75rem system-ui, sans-serif; opacity: .6; }
+.gallery a { color: #e0a96d; }

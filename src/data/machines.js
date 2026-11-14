@@ -3,6 +3,7 @@ export const machines = [
     id: 'spirit',
     name: 'Spirit',
     tagline: 'Built for 90 days. Stayed for years.',
+    imageQuery: 'Spirit rover Mars Gusev',
     chapters: [
       { title: 'Identity', kind: 'documented',
         text: 'Spirit, also called MER-A, was a six-wheeled NASA Mars Exploration Rover, one of two identical twins.',
