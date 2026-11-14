@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export default function NasaImages({ query }) {
+export default function NasaImages({ query, limit = 1 }) {
   const [items, setItems] = useState(null)
   const [failed, setFailed] = useState(false)
 
@@ -12,12 +12,12 @@ export default function NasaImages({ query }) {
         if (cancelled) return
         const list = (j.collection?.items ?? [])
           .filter((i) => i.links?.[0]?.href && i.data?.[0])
-          .slice(0, 1)
+          .slice(0, limit)
         setItems(list)
       })
       .catch(() => { if (!cancelled) setFailed(true) })
     return () => { cancelled = true }
-  }, [query])
+  }, [query, limit])
 
   if (failed) return <p className="src">NASA images could not be loaded right now.</p>
   if (!items) return <p className="src">Loading NASA images…</p>
