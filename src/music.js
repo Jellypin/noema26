@@ -68,14 +68,6 @@ export function ignitionSound(kind) {
     lfo.connect(lg); lg.connect(g.gain); o.connect(g); g.connect(sfx)
     o.start(t); lfo.start(t); o.stop(t + 1.2); lfo.stop(t + 1.2)
   }
-  ;[523.25, 659.25, 1046.5].forEach((f, i) => {
-    const s = t + 0.9 + i * 0.12
-    const n = ctx.createOscillator(), ng = ctx.createGain()
-    n.type = 'square'; n.frequency.value = f
-    ng.gain.setValueAtTime(0.0001, s)
-    ng.gain.exponentialRampToValueAtTime(0.25, s + 0.01); ng.gain.exponentialRampToValueAtTime(0.0001, s + 0.3)
-    n.connect(ng); ng.connect(sfx); n.start(s); n.stop(s + 0.35)
-  })
 }
 
 export function launchSound() {
