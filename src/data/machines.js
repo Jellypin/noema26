@@ -1,0 +1,27 @@
+export const machines = [
+  {
+    id: 'spirit',
+    name: 'Spirit',
+    tagline: 'Built for 90 days. Stayed for years.',
+    chapters: [
+      { title: 'Identity', kind: 'documented',
+        text: 'Spirit, also called MER-A, was a six-wheeled NASA Mars Exploration Rover, one of two identical twins.',
+        source: 'NASA / JPL Mars Exploration Rover mission' },
+      { title: 'Departure', kind: 'documented',
+        text: 'Spirit launched on June 10, 2003, and landed in Gusev Crater on January 4, 2004.',
+        source: 'Wikipedia: Spirit (rover), to verify against NASA' },
+      { title: 'Mission', kind: 'documented',
+        text: 'The goal: look for clues about whether Mars once had environments that could have supported life. The planned mission was 90 Martian days.',
+        source: 'Wikipedia: Spirit (rover), to verify against NASA' },
+      { title: 'Discovery', kind: 'documented',
+        text: 'Even after it was stuck, Spirit kept doing science. The soil it was trapped in hid a layer of iron sulfate.',
+        source: 'Wikipedia: Spirit (rover), to verify against NASA' },
+      { title: 'Final chapter', kind: 'documented',
+        text: 'On May 1, 2009, Spirit became stuck in soft sand. In January 2010 NASA recast it as a stationary science station. Its last message reached Earth on March 22, 2010. NASA ended contact attempts and declared the mission over on May 25, 2011.',
+        source: 'Space.com; Spaceflight Now; Wikipedia' },
+      { title: 'A voice', kind: 'imagined',
+        text: 'Imagined: "I was supposed to last three months. I stayed, and I kept looking."',
+        source: 'Creative writing by the NOEMA team' },
+    ],
+  },
+]

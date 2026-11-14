@@ -1,0 +1,4 @@
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #07090f; color: #e8ecf4;
+  font-family: Georgia, 'Times New Roman', serif; line-height: 1.6; }
