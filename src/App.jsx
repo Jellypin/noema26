@@ -1,6 +1,5 @@
-
-import NasaImages from './NasaImages'
 import { machines } from './data/machines'
+import NasaImages from './NasaImages'
 import './App.css'
 
 export default function App() {
@@ -14,6 +13,7 @@ export default function App() {
         <section key={m.id} className="machine">
           <h2>{m.name}</h2>
           <p className="tag">{m.tagline}</p>
+          <NasaImages query={m.imageQuery} />
           {m.chapters.map((c) => (
             <article key={c.title} className="chapter">
               <span className={`badge ${c.kind}`}>{c.kind}</span>
