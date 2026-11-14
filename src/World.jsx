@@ -141,7 +141,7 @@ export default function World({ lit, paused, onOpen, onFinish }) {
     const rxw = mx(machines.length), maxX = rxw + 200
     const mi = machines.findIndex((m) => m.biome === 'moon')
     const resize = () => {
-      const k = Math.max(2, Math.round(innerWidth / 220))
+      const k = Math.max(3, Math.round(innerWidth / 150))
       s.current.k = k
       c.width = Math.ceil(innerWidth / k); c.height = Math.ceil(innerHeight / k)
     }

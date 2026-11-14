@@ -12,7 +12,7 @@ export default function NasaImages({ query }) {
         if (cancelled) return
         const list = (j.collection?.items ?? [])
           .filter((i) => i.links?.[0]?.href && i.data?.[0])
-          .slice(0, 3)
+          .slice(0, 1)
         setItems(list)
       })
       .catch(() => { if (!cancelled) setFailed(true) })
