@@ -9,7 +9,9 @@ function MissionFile({ m }) {
     <div className="file">
       <h3>Mission file</h3>
       <dl>
-        {m.facts?.map(([k, v]) => (<span key={k} style={{ display: 'contents' }}><dt>{k}</dt><dd>{v}</dd></span>))}
+        {m.facts?.map(([k, v]) => (
+          <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
+        ))}
       </dl>
       <h3>Original sources</h3>
       <ul>

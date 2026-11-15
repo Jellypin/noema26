@@ -1,4 +1,3 @@
-
 :root {
   --bg: #0a0a1f;
   --mint: #7fe3c0;
@@ -123,6 +122,17 @@ body::after {
 .controls .abt:hover {
   background: var(--mint);
   color: var(--bg);
+}
+
+.control-buttons {
+  display: flex;
+  gap: .6rem;
+  align-items: center;
+}
+
+/* The AUDIO toggle only appears on small screens. */
+.controls .vol-toggle {
+  display: none;
 }
 
 /* AUDIO SLIDERS */
@@ -612,6 +622,10 @@ body::after {
   margin: 0 0 .8rem;
 }
 
+.file dl > div {
+  display: contents;
+}
+
 .file dt {
   opacity: .6;
 }
@@ -640,13 +654,30 @@ body::after {
   .controls {
     top: .65rem;
     right: .6rem;
-    max-width: 70vw;
+    max-width: calc(100vw - 7rem);
+    gap: .5rem;
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+  }
+
+  .control-buttons {
     gap: .5rem;
   }
 
+  .controls .vol-toggle {
+    display: inline-block;
+  }
+
+  /* Sliders are tucked behind the AUDIO button on phones. */
   .volume-controls {
+    display: none;
     gap: .6rem;
     padding: .45rem .5rem;
+  }
+
+  .volume-controls.open {
+    display: flex;
   }
 
   .volume-control {
@@ -684,13 +715,13 @@ body::after {
 }
 
 @media (max-width: 380px) {
-  .controls {
-    max-width: 68vw;
+  .control-buttons {
+    gap: .35rem;
   }
 
-  .volume-controls {
-    width: 100%;
-    justify-content: flex-end;
+  .controls .mute,
+  .controls .abt {
+    padding: .5rem .4rem;
   }
 
   .volume-control {
