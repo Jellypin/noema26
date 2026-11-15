@@ -1,11 +1,8 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 
 export default function Ceremony({ m, onEnd }) {
-  const endRef = useRef(onEnd)
-  endRef.current = onEnd
-
   useEffect(() => {
-    const t = setTimeout(() => endRef.current(), 4200)
+    const t = setTimeout(onEnd, 4200)
     return () => clearTimeout(t)
   }, [])
   return (

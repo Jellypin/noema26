@@ -124,17 +124,6 @@ body::after {
   color: var(--bg);
 }
 
-.control-buttons {
-  display: flex;
-  gap: .6rem;
-  align-items: center;
-}
-
-/* The AUDIO toggle only appears on small screens. */
-.controls .vol-toggle {
-  display: none;
-}
-
 /* AUDIO SLIDERS */
 
 .volume-controls {
@@ -622,10 +611,6 @@ body::after {
   margin: 0 0 .8rem;
 }
 
-.file dl > div {
-  display: contents;
-}
-
 .file dt {
   opacity: .6;
 }
@@ -654,30 +639,13 @@ body::after {
   .controls {
     top: .65rem;
     right: .6rem;
-    max-width: calc(100vw - 7rem);
-    gap: .5rem;
-    flex-direction: column-reverse;
-    flex-wrap: nowrap;
-    align-items: flex-end;
-  }
-
-  .control-buttons {
+    max-width: 70vw;
     gap: .5rem;
   }
 
-  .controls .vol-toggle {
-    display: inline-block;
-  }
-
-  /* Sliders are tucked behind the AUDIO button on phones. */
   .volume-controls {
-    display: none;
     gap: .6rem;
     padding: .45rem .5rem;
-  }
-
-  .volume-controls.open {
-    display: flex;
   }
 
   .volume-control {
@@ -715,16 +683,28 @@ body::after {
 }
 
 @media (max-width: 380px) {
-  .control-buttons {
-    gap: .35rem;
+  .controls {
+    max-width: 68vw;
   }
 
-  .controls .mute,
-  .controls .abt {
-    padding: .5rem .4rem;
+  .volume-controls {
+    width: 100%;
+    justify-content: flex-end;
   }
 
   .volume-control {
     width: 4rem;
   }
 }
+
+/* Engineer's Bench */
+.bench { display: flex; flex-direction: column; gap: 12px; }
+.bq { font-size: 1.45rem; margin: 0; }
+.bopts { display: flex; flex-direction: column; gap: 8px; }
+.bopt { text-align: left; line-height: 1.5; }
+.bopt.right { outline: 3px solid #7fe3c0; background: #123a34; }
+.bopt.wrong { outline: 3px solid #ff9a5a; }
+.reveal { display: flex; flex-direction: column; gap: 10px; animation: fade 0.6s both; }
+.reveal p { margin: 0; }
+.nextidea { border-left: 3px solid #ffd98a; padding-left: 10px; display: flex; flex-direction: column; gap: 6px; }
+@media (prefers-reduced-motion: reduce) { .reveal { animation: none; } }

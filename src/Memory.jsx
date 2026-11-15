@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import NasaImages from './NasaImages'
+import Bench from './Bench'
+import { bench } from './data/bench'
 import { useDialog } from './useDialog'
 
 const pad = (n) => String(n).padStart(2, '0')
@@ -9,9 +11,7 @@ function MissionFile({ m }) {
     <div className="file">
       <h3>Mission file</h3>
       <dl>
-        {m.facts?.map(([k, v]) => (
-          <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
-        ))}
+        {m.facts?.map(([k, v]) => (<span key={k} style={{ display: 'contents' }}><dt>{k}</dt><dd>{v}</dd></span>))}
       </dl>
       <h3>Original sources</h3>
       <ul>
@@ -25,11 +25,12 @@ function MissionFile({ m }) {
   )
 }
 
-export default function Memory({ m, revisit, onDone, onClose }) {
+export default function Memory({ m, revisit, onDone, onSolve, onClose }) {
   const ref = useDialog(onClose)
   const [i, setI] = useState(-1)
   const [seen, setSeen] = useState(0)
   const [tab, setTab] = useState('story')
+  const [atBench, setAtBench] = useState(false)
   const total = m.chapters.length, last = total - 1
   const go = (n) => { setI(n); setSeen((s) => Math.max(s, n)); setTab('story') }
   const c = i >= 0 ? m.chapters[i] : null
@@ -53,7 +54,9 @@ export default function Memory({ m, revisit, onDone, onClose }) {
         </>
       )}
 
-      {tab === 'story' && c && (
+      {tab === 'story' && atBench && <Bench m={m} onSolve={onSolve} onDone={onDone} />}
+
+      {tab === 'story' && c && !atBench && (
         <>
           <div className={`rec ${c.kind}`}>
             <div className="recmeta">
@@ -76,8 +79,8 @@ export default function Memory({ m, revisit, onDone, onClose }) {
           </div>
           <div className="nav">
             {i > 0 && <button className="pbtn" onClick={() => go(i - 1)}>Back</button>}
-            <button className="pbtn" onClick={() => (i === last ? (revisit ? onClose() : onDone(m)) : go(i + 1))}>
-              {i === last ? (revisit ? 'Close' : 'Release the light') : 'Continue'}
+            <button className="pbtn" onClick={() => (i === last ? (revisit ? onClose() : bench[m.id] ? setAtBench(true) : onDone(m)) : go(i + 1))}>
+              {i === last ? (revisit ? 'Close' : 'To the bench') : 'Continue'}
             </button>
           </div>
         </>

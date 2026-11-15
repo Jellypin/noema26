@@ -298,17 +298,8 @@ export default function World({ lit, paused, onOpen, onFinish }) {
     const st = s.current
     const wx = e.clientX / st.k + st.cam
     if (!pausedRef.current) {
-      // Lit machines can be reread from anywhere. A dark machine can be
-      // reopened by tapping it when the walker is next to it, so closing
-      // a panel with x is never a dead end.
-      const hit = machines.findIndex((m, i) =>
-        Math.abs(wx - mx(i)) < 14 &&
-        (litRef.current.includes(m.id) || Math.abs(st.x - mx(i)) < 56))
-      if (hit >= 0) {
-        st.opened[machines[hit].id] = true
-        openRef.current(machines[hit])
-        return
-      }
+      const hit = machines.findIndex((m, i) => litRef.current.includes(m.id) && Math.abs(wx - mx(i)) < 14)
+      if (hit >= 0) { openRef.current(machines[hit]); return }
     }
     st.tx = wx
   }

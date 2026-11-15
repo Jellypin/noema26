@@ -15,7 +15,6 @@ import {
   fadeMusic,
   setVolume,
   setSfxVolume,
-  stopMusic,
 } from './music'
 
 import './App.css'
@@ -28,7 +27,7 @@ export default function App() {
   const [done, setDone] = useState(false)
   const [muted, setMuted] = useState(false)
   const [about, setAbout] = useState(false)
-  const [audioOpen, setAudioOpen] = useState(false)
+  const [solved, setSolved] = useState([])
 
   // Independent volume settings, from 0 to 1.
   const [musicVol, setMusicVol] = useState(1)
@@ -45,9 +44,6 @@ export default function App() {
       fadeMusic(20)
     }
   }, [all])
-
-  // Stop the sequencer if the app unmounts.
-  useEffect(() => () => stopMusic(), [])
 
   const begin = () => {
     startMusic()
@@ -112,7 +108,7 @@ export default function App() {
           {all
             ? 'Every machine is lit. Follow the glow to the rocket.'
             : lit.length
-              ? 'Walk to the next dark machine. Tap a machine beside you to read it again.'
+              ? 'Walk to the next dark machine. Tap a lit one to read it again.'
               : 'Tap anywhere or use arrow keys / A and D to walk. Find the dark machines.'}
         </p>
       )}
@@ -142,10 +138,7 @@ export default function App() {
       {/* Audio and information controls */}
       <div className="controls">
 
-        <div
-          id="audio-panel"
-          className={audioOpen ? 'volume-controls open' : 'volume-controls'}
-        >
+        <div className="volume-controls">
 
           <label className="volume-control">
             <span className="volume-label">
@@ -193,34 +186,21 @@ export default function App() {
 
         </div>
 
-        <div className="control-buttons">
+        <button
+          className="mute"
+          onClick={handleMute}
+          aria-label={muted ? 'Unmute audio' : 'Mute audio'}
+          aria-pressed={muted}
+        >
+          {muted ? 'SOUND OFF' : 'SOUND ON'}
+        </button>
 
-          <button
-            className="abt vol-toggle"
-            onClick={() => setAudioOpen((o) => !o)}
-            aria-expanded={audioOpen}
-            aria-controls="audio-panel"
-          >
-            AUDIO
-          </button>
-
-          <button
-            className="mute"
-            onClick={handleMute}
-            aria-label={muted ? 'Unmute audio' : 'Mute audio'}
-            aria-pressed={muted}
-          >
-            {muted ? 'SOUND OFF' : 'SOUND ON'}
-          </button>
-
-          <button
-            className="abt"
-            onClick={() => setAbout(true)}
-          >
-            ABOUT
-          </button>
-
-        </div>
+        <button
+          className="abt"
+          onClick={() => setAbout(true)}
+        >
+          ABOUT
+        </button>
 
       </div>
 
@@ -237,6 +217,7 @@ export default function App() {
           revisit={lit.includes(active.id)}
           onClose={() => setActive(null)}
           onDone={release}
+          onSolve={(id, ok) => ok && setSolved((s) => (s.includes(id) ? s : [...s, id]))}
         />
       )}
 
@@ -255,7 +236,7 @@ export default function App() {
 
       {/* Final experience */}
       {done && (
-        <Ending lit={lit} />
+        <Ending lit={lit} solved={solved.length} />
       )}
     </>
   )

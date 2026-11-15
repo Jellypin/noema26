@@ -54,19 +54,17 @@ export const extras = {
     art: 'insight',
     facts: [
       ['Mission', 'InSight lander'],
-      ['Launch', 'May 5, 2018'],
+      ['Launch', 'May 2018'],
       ['Landing', 'November 26, 2018, Elysium Planitia'],
       ['Marsquakes recorded', 'more than 1,300'],
       ['Last contact', 'December 15, 2022'],
-      ['Declared over', 'December 21, 2022'],
+      ['Mission ended', 'December 21, 2022'],
     ],
     links: [
-      ['NASA Science: InSight Lander', 'https://science.nasa.gov/mission/insight/'],
-      ['NASA: Mars orbiter spots retired InSight lander', 'https://www.nasa.gov/missions/insight/nasa-mars-orbiter-spots-retired-insight-lander-to-study-dust-movement/'],
       ['Engadget: NASA retires InSight (quotes NASA)', 'https://www.engadget.com/nasa-officially-retires-its-in-sight-mars-lander-190245298.html?src=rss'],
       ['The Weather Network (NASA/JPL statement)', 'https://www.theweathernetwork.com/en/news/science/space/mars-insight-mission-ends-after-nasa-loses-contact-with-lander'],
     ],
-    note: 'NASA’s InSight page confirms the launch and landing dates, the landing site and the December 15, 2022 end of mission. The marsquake count and the December 21 declaration come from news reports quoting NASA/JPL.',
+    note: 'These are news reports quoting NASA. A direct NASA page for InSight has not been verified yet.',
     photos: { Discovery: 'InSight seismometer SEIS Mars', 'Final chapter': 'InSight lander dust solar panels' },
   },
   surveyor3: {

@@ -7,7 +7,6 @@ let sfx = null
 let bus = null
 
 let started = false
-let tickTimer = null
 let muted = false
 let faded = false
 let fadeEnd = 0
@@ -28,9 +27,9 @@ let pulseGain = null
 let choirGain = null
 let leadGain = null
 
-// Default loudness (raised a further 10%).
-const MUSIC_VOL = 0.242
-const SFX_VOL = 0.33
+// Increased default loudness.
+const MUSIC_VOL = 0.22
+const SFX_VOL = 0.3
 const TICK_MS = 450
 
 const mtof = (m) => 440 * Math.pow(2, (m - 69) / 12)
@@ -118,23 +117,6 @@ export function setIntensity(n) {
   applyLevel(n)
 }
 
-// Brings the music back after the ending fade (or after muting).
-function restoreMaster() {
-  if (!master || !ctx) return
-
-  const t = ctx.currentTime
-  const cur = master.gain.value
-
-  faded = false
-  master.gain.cancelScheduledValues(t)
-  master.gain.setValueAtTime(cur, t)
-  master.gain.setTargetAtTime(
-    muted ? 0 : MUSIC_VOL * musicVolume,
-    t,
-    0.4
-  )
-}
-
 // Background music volume: 0 to 1.
 export function setVolume(value) {
   const v = Number(value)
@@ -142,15 +124,7 @@ export function setVolume(value) {
 
   musicVolume = Math.max(0, Math.min(1, v))
 
-  if (!master || !ctx) return
-
-  // Moving the slider after the ending fade brings the music back.
-  if (faded) {
-    restoreMaster()
-    return
-  }
-
-  if (!muted) {
+  if (master && ctx && !muted && !faded) {
     const t = ctx.currentTime
     master.gain.cancelScheduledValues(t)
     master.gain.setTargetAtTime(
@@ -363,7 +337,7 @@ export function startMusic() {
     setChord(CHORDS[0], 0.05)
     applyLevel(level)
 
-    tickTimer = setInterval(tick, TICK_MS)
+    setInterval(tick, TICK_MS)
 
   } catch (e) {
     console.error('Audio initialization failed:', e)
@@ -386,18 +360,13 @@ export function fadeMusic(sec) {
 export function toggleMute() {
   muted = !muted
 
-  if (master && ctx) {
-    if (faded && !muted) {
-      // Unmuting after the ending fade brings the music back.
-      restoreMaster()
-    } else if (!faded) {
-      master.gain.cancelScheduledValues(ctx.currentTime)
-      master.gain.setTargetAtTime(
-        muted ? 0 : MUSIC_VOL * musicVolume,
-        ctx.currentTime,
-        0.05
-      )
-    }
+  if (master && ctx && !faded) {
+    master.gain.cancelScheduledValues(ctx.currentTime)
+    master.gain.setTargetAtTime(
+      muted ? 0 : MUSIC_VOL * musicVolume,
+      ctx.currentTime,
+      0.05
+    )
   }
 
   if (sfx && ctx) {
@@ -503,39 +472,4 @@ export function launchSound() {
 
   o.start(t)
   o.stop(t + 5)
-}
-
-// Stops the sequencer and releases the audio context.
-export function stopMusic() {
-  if (tickTimer) {
-    clearInterval(tickTimer)
-    tickTimer = null
-  }
-
-  if (ctx) {
-    try {
-      ctx.close().catch(() => {})
-    } catch {
-      // already closed
-    }
-  }
-
-  ctx = null
-  master = null
-  sfx = null
-  bus = null
-  padVoices = []
-  choirVoices = []
-  padGain = null
-  padFilter = null
-  arpGain = null
-  pulseGain = null
-  choirGain = null
-  leadGain = null
-
-  started = false
-  faded = false
-  fadeEnd = 0
-  step = 0
-  chordIdx = 0
 }

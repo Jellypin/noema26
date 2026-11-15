@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { machines } from './data/world'
 
 const PTS = [[18, 58], [34, 28], [52, 52], [70, 22], [84, 50], [60, 68], [28, 14]]
-const PRESETS = ['A rover', 'A telescope', 'A lander']
+const PRESETS = ['A self-cleaning solar panel', 'A machine that repairs itself', 'A rover that leaves no trace']
 
 function wrap(g, text, x, y, maxW, lh) {
   let line = ''
@@ -30,7 +30,7 @@ function drawCard(c, d) {
   g.fillStyle = '#dfe8ff'; g.font = '16px "Press Start 2P", monospace'
   g.fillText(d.name ? d.name.toUpperCase() : 'A KEEPER', W / 2, 140)
   g.fillStyle = '#ffd98a'; g.font = '12px "Press Start 2P", monospace'
-  g.fillText(`${d.count} LIGHTS KEPT`, W / 2, 170)
+  g.fillText(`${d.count} LIGHTS KEPT · ${d.solved} PROBLEMS SOLVED`, W / 2, 170)
   const pts = PTS.slice(0, Math.max(d.count, 2)).map(([x, y]) => [60 + x * 4.2, 205 + y * 2])
   g.strokeStyle = '#7fe3c0'; g.lineWidth = 2; g.globalAlpha = 0.6
   g.beginPath(); pts.forEach(([x, y], i) => (i ? g.lineTo(x, y) : g.moveTo(x, y))); g.stroke()
@@ -49,7 +49,7 @@ function drawCard(c, d) {
   g.fillText('NASA SPACE APPS 2026', W / 2, 710)
 }
 
-export default function Ending({ lit }) {
+export default function Ending({ lit, solved = 0 }) {
   const count = lit.length
   const names = machines.filter((m) => lit.includes(m.id)).map((m) => m.name)
   const pts = PTS.slice(0, Math.max(count, 2))
@@ -63,10 +63,10 @@ export default function Ending({ lit }) {
   useEffect(() => {
     if (step !== 4 || !cref.current) return
     const c = cref.current
-    const paint = () => drawCard(c, { name: name.trim(), what, count, names })
+    const paint = () => drawCard(c, { name: name.trim(), what, count, names, solved })
     paint()
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(paint)
-  }, [step, what, name, count])
+  }, [step, what, name, count, solved])
 
   const save = () => {
     const c = cref.current
@@ -113,7 +113,7 @@ export default function Ending({ lit }) {
       {step === 2 && (
         <>
           <span className="badge imagined">IMAGINED TRANSMISSION</span>
-          {['Someone once did this for them.', 'Now it is your turn.', 'Who will you build?'].map((t, i) => (
+          {['Someone once did this for them.', 'Now it is your turn.', 'What will you build that lasts?'].map((t, i) => (
             <p key={t} className="keeper line" style={{ animationDelay: `${i * 1.3}s` }}>{t}</p>
           ))}
           <button className="pbtn line" style={{ animationDelay: '4s' }} onClick={next}>Answer</button>
